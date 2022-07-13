@@ -6,7 +6,7 @@ This is a benchmark tool to measure the write/read/space amplification of SQL da
 - Traditional SQL database benchmark tools focus on the performance of database, 
 like latency and max QPS. Database deployed on cloud is more and more popular, 
 and the resources include network, disk bandwidth are limited on the cloud. This
-tool will let you know the amplification charactiristcs of your SQL database 
+tool will let you know the amplification characteristcs of your SQL database 
 and indicate you to do deeper optimizations.
 
 - Traditional benchmark tools like sysbench and tpcc, their table schema is simple 
