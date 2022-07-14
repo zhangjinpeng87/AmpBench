@@ -4,7 +4,7 @@ use structopt::StructOpt;
 #[structopt(
     name = "AmpBench",
     about = "A tool to measure the write/read/space amplification of SQL database.",
-    author = "zhangjinpeng1987",
+    author = "zhangjinpeng1987"
 )]
 pub struct Opt {
     #[structopt(long, default_value = "127.0.0.1")]
@@ -33,9 +33,7 @@ pub struct Opt {
 
 #[derive(Debug, StructOpt)]
 pub enum Cmd {
-    #[structopt(
-        about = "prepare schema and data for database"
-    )]
+    #[structopt(about = "prepare schema and data for database")]
     Prepare {
         #[structopt(short = "t", long = "tables", default_value = "1")]
         tables: u32,
@@ -44,11 +42,22 @@ pub enum Cmd {
             short = "c",
             long = "columns",
             use_delimiter = true,
-            require_delimiter = true,
             value_delimiter = ",",
             default_value = "int(10),int(10),int(10),int(10),varchar(255),varchar(255),varchar(255),datetime,text,text"
         )]
         columns: Vec<String>,
+
+        #[structopt(
+            short = "p",
+            long = "primary",
+            about = "primary key description, looks like \"1,3,2\", it menas the priamry key comprised\
+                    of column1, column3 and column2, and in this order",
+            use_delimiter = true,
+            value_delimiter = ",",
+            // "1,3,2" means this is a combined primary key comprised by columns 1,3,2 and associated order.
+            default_value = "1,3,2" 
+        )]
+        primary: Vec<String>,
 
         #[structopt(short = "r", long = "rows", default_value = "100000")]
         rows: u32,
@@ -56,24 +65,21 @@ pub enum Cmd {
         #[structopt(
             short = "i", 
             long = "indexes",
-            about = "index description, 1 means create index(column1), 2_3 means create index(column2, column3)",
+            about = "indexes description, looks like \"unique_2_3,5\", it means there are 2 the first \
+                    one is a unique index comprised of column2 and column3",
             use_delimiter = true,
-            require_delimiter = true,
             value_delimiter = ",", 
-            default_value = "1,2_3,5,8",
+            // there are 2 secondary indexes, first one is a unique key comprised column2 and column3.
+            default_value = "unique_2_3,5",
         )]
         indexes: Vec<String>,
     },
-    #[structopt(
-        about = "run insert workload"
-    )]
+    #[structopt(about = "run insert workload")]
     Insert {
         #[structopt(short = "r", long = "rows", default_value = "100000")]
         rows: u32,
     },
-    #[structopt(
-        about = "run update workload"
-    )]
+    #[structopt(about = "run update workload")]
     Update {
         #[structopt(short = "r", long = "rows", default_value = "100000")]
         rows: u32,

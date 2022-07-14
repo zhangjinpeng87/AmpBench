@@ -1,7 +1,8 @@
 mod cmd;
+mod schema;
 
-use structopt::StructOpt;
 use crate::cmd::Opt;
+use structopt::StructOpt;
 
 fn main() {
     let opt = Opt::from_args();
